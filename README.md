@@ -21,3 +21,7 @@ npm run login
 `node --check sign.cjs` 与 `node --check login.cjs` 可做语法检查。实际签到依赖账号已登录、目标站点可访问及其当前页面结构；脚本每次只提交一次，不把验证码通过或 HTTP 200 单独视为签到成功。若站点修改滑块或表单，请先检查结果文件及页面再调整选择器。
 
 这是本站专用实现，不依赖 `qd-today/qd`。代码不包含个人 Cookie、代理地址或会话文件。
+
+## 可选队列 worker
+
+`python3 worker.py` 从 `/queue` 接收 `{"store":"laowang","created":<Unix 秒>}` 请求。任务结束输出结构化 `outcome`；没有任务时不启动浏览器。`node sign.cjs --status` 只读检查今日签到，不提交表单。worker 复用本项目的脚本和持久会话，不依赖 FGC 的调度或常驻登录页。

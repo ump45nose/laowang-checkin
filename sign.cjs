@@ -7,6 +7,7 @@ const profile=path.join(dataDir,'browser');const proxy=process.env.LAOWANG_PROXY
  await p.waitForTimeout(1000);
  const readStatus=async()=>({signed:await p.locator('.qdleft .btnvisted').count()>0,reward:await p.locator('#lxreward').inputValue().catch(()=>null),streak:await p.locator('#lxdays').inputValue().catch(()=>null),days:await p.locator('#lxtdays').first().inputValue().catch(()=>null)});
  let status=await readStatus();if(status.signed){Object.assign(result,{status:'already_signed',sign_in_confirmed:true,details:status,submitted:false});return;}
+ if(process.argv.includes('--status')){Object.assign(result,{status:'not_signed',details:status,submitted:false});return;}
  const html=await p.content();const hash=html.match(/formhash=([a-f0-9]{8})/);if(!hash)throw Error('Missing current authenticated formhash');
  await p.goto('https://laowang.vip/plugin.php?id=k_misign:sign&operation=qiandao&formhash='+hash[1]+'&format=empty',{waitUntil:'domcontentloaded',timeout:45000});
  let text=await p.locator('body').innerText();

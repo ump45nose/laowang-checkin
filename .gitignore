@@ -4,3 +4,5 @@ data/
 *.log
 *.png
 *.jsonl
+__pycache__/
+*.py[cod]
